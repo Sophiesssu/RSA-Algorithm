@@ -1,0 +1,82 @@
+# plaintext = 'Pythonpqed'
+# p = 9648423029010515676590551740010426534945737639235739800643989352039852507298491399561035009163427050370107570733633350911691280297777160200625281665378483
+# q = 11874843837980297032092405848653656852760910154543380907650040190704283358909208578251063047732443992230647903887510065547947313543299303261986053486569407
+# e = 65537
+# d = 56632047571190660567520341028861194862411428416862507034762587229995138605649836960220619903456392752115943299335385163216233744624623848874235303309636393446736347238627793022725260986466957974753004129210680401432377444984195145009801967391196615524488853620232925992387563270746297909112117451398527453977
+#####
+import math
+#####
+plaintext = str(input("請輸入plaintext: "))
+p = int(input("請輸入質數p: "))   
+q = int(input("請輸入質數q: "))
+#####
+# 檢驗p,q是否為質數
+z = 2
+while z < p:
+    if p % z == 0:
+        print(p,"不是質數")
+        p = int(input("請再次輸入質數p: "))
+        break
+    z += 1
+if z == p:
+    print(p,'是質數')
+
+while z < q:
+    if q % z == 0:
+        print(q,"不是質數")
+        q = int(input("請再次輸入質數q: "))
+        break
+    z += 1
+if z == q:
+    print(q,"是質數")
+#####
+n = p*q
+phi_n = (p-1)*(q-1)
+#####
+print("n =",n)
+print("phi_n =",phi_n)
+e = int(input("請輸入e(1<e<phi_n): "))
+#####
+i = 1
+while(True):
+    x=(i*phi_n)+1
+    if(x%e==0):
+        d=x/e
+        break
+    i=i+1
+if((phi_n*i+i)%e !=0):
+  d=D
+
+print("d =",d)
+print("i =",i)
+#####
+Public = (e,n)    # 公鑰
+Private = (d,n)    # 私鑰
+#####
+def long(a):
+  res=a
+  for i in range(2,int(a**0.5)+1):
+    if a%i==0:res=(res//i)*(i-1)
+    while a%i==0:
+      a//=i
+    if a>1: res=(res//a)*(a-1)
+    return res
+#####
+# plaintext = 'Pythonpqed'
+ln = [ord(x) for x in plaintext]
+print(ln)
+
+
+s = [str(integer) for integer in ln]
+a_string = "".join(s)
+res = int(a_string)
+print(res)
+#####
+transformed_plaintext = res    # 明文
+ciphertext = pow(transformed_plaintext,e,n)  # transformed_plaintext的e次方模上n
+print("ciphertext =",ciphertext)
+#####
+decrypted_ciphertext = pow(ciphertext,int(d),n)
+print("decrypted_ciphertext = ",decrypted_ciphertext)
+#####
+transformed_plaintext == decrypted_ciphertext
